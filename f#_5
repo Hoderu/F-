@@ -1,0 +1,63 @@
+sequence
+
+Ленивое вычисление
+Ленивая генерация элементов
+
+seq{1..2..10}
+
+let inlist = [for a in 1..10 do
+		printf «in list %i» a yield a]
+
+let inSeq = seq{for a in 1..10 do
+		printf «in seq %i» a yeild a}
+
+
+ничего не выводится, пока мы не попросим
+
+Types if F#
+-C#
+	primitives
+	ref
+	string
+	bool
+	users struct
+	class
+	interface
+-Generic
+	unit(в отличие от войдов имеет значение и записывается - вот так ())
+	‘a -> ‘as
+	Функция представляет собой отображение domain -> range
+
+let hi x = printf «hi %i» x
+	int -> unit
+let hi2 = printf «Hello» 
+	unit = ()
+let hi2 () = printf «hello»
+	unit -> unit
+
+let test x = x.ToString().Length
+	x может быть любого типа а значит это дженерик
+	a’ -> int
+let text x y = x.ToString().Length + y
+	a’ -> b’ -> int
+= x + y
+	a’ -> a’ -> int
+
+пишем новый тип - дерево
+
+type ‘a Tree = Empty | Branch of ‘a * ‘a Tree *’a Tree
+	a
+      b   c
+     d f
+
+let tree1 = Branch(‘a’, Branch(‘b’, Branch(‘d’,Empty,Empty), . . .))
+
+let leaf x = Branch (x, Empty, Empty)
+	Symmetrical Binary tree
+
+
+
+Построить асоциальный граф
+ноды - это имена персонажей
+ребро между нодами - это появление персонажей
+отсортировать по весу ребер  

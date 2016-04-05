@@ -1,0 +1,45 @@
+JSON
+
+let json = «»»
+{«group»:223, 
+	«students»: [{
+		«name»: «Vasya»
+		«age»: 19
+	}],
+	«dead»: null
+	«sunny»: true
+}
+«»»
+
+type Token = 
+	OpenBrace | CloseBrace
+	OpenBracket | CloseBracket
+	Comma | Colon
+	| String of string
+	| Number of int
+	| Null | Boolean of boolean
+
+type ‘a Tree = Node of ‘a | Branch of (Tree ‘a, Tree ‘a) 
+
+
+open System
+
+let tokenize (Source: char list) = 
+	let rec parseString …
+	let rec token …	
+	let rec tokenize’ acc = function // acc list = match list with
+	| ‘{’ :: t -> tokenize’ (OpenBrace::acc) t
+	| w::t when Char.IsWhitSpace(w) -> tokenize’ acc list
+	| ‘}’
+	| ‘[’
+	| ‘]’
+	| ‘:’
+	| ‘,’
+	| ‘«’ :: t -> let s,t’ = parseString «» t tokenize’ (String s::acc) t’	
+
+let explode s = [for c in s -> c]
+
+string -> char list
+
+
+let jsonlist = json |> explode

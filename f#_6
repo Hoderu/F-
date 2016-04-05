@@ -1,0 +1,203 @@
+пишем новый тип - дерево
+
+type ‘a Tree = Empty | Branch of ‘a * ‘a Tree *’a Tree
+	a
+      b   c
+     d f
+
+let tree1 = Branch(‘a’, Branch(‘b’, Branch(‘d’,Empty,Empty), . . .))
+
+let leaf x = Branch (x, Empty, Empty)
+	Symmetrical Binary tree
+
+
+
+Построить асоциальный граф
+ноды - это имена персонажей
+ребро между нодами - это появление персонажей
+отсортировать по весу ребер  
+
+
+
+
+
+
+Семинар 6
+
+let rec sum = function 
+[]->[]
+| h::t-> h + sum t
+
+let rec map f = function
+[]->[]
+| h::t-> (f h)||map(f t)
+
+
+let rec any f = function
+[]->false
+|h::t -> (f h) || (any f t)
+
+
+моноид - тройка из множества, операции и угарного элемента (M,#,u)
+
+Любая из операции может быть вычислена через бинарную функцию хэш(#) и (u)
+
+Можно выразить эти функции через свертки
+
+
+List.foldBack
+
+let rec foldr f list u =
+match list with
+[] -> u (вернуть начальное значение)
+| h::t -> f h (foldr f t u)
+
+let sum list = foldr (+) list []
+
+let filter f list = foldr
+(fun x acc-> if f x then x::acc else acc)
+list []
+
+
+List.reduceBack
+
+let sum list = reducer (+) list
+
+
+let rec reducer = … самим
+
+let rec reducer f list = 
+	let mf x acc = 
+	продолжение дальше
+
+
+
+type ‘a Maybe = Just of ‘a | Nothing
+type ‘a option = Some of ‘a | None
+Just 42 // int Maybe
+Nothing // ‘a Maybe
+
+
+indexOf(«abc»,»c») //вернет 2, но правильнее было бы возвращать Just(2)
+	      «z») //-1, правильнее было бы Nothing
+
+-> |Just x
+   |Nothing 
+
+
+
+
+
+let rec reducer f list = 
+	let mf x acc = Just( 
+		match acc with
+		Nothing->x
+		|Just y -> f x y
+	)
+	match foldr mf list Nothing with
+	Just x -> x
+	|Nothing -> raise(System.ArgumentException(«exp y»))	//не разборчиво было написано в скобочках
+
+
+
+reducer (-) [1..4]
+let sum = 
+	let rec loop a = function
+	[]->a
+	|h::t->loop(h+a) t
+	loop 0
+
+
+
+let reverse (list:’a list)=
+	let rec loop a = function
+	[]->a
+	|h::t->loop(h::a)t
+	loop [] list
+
+
+let foldl f a list = 
+	let rec loop a = function
+	[]->a
+	|h::t->loop(f a h) t
+	loop a list
+
+reducel f list = foldl f List.head list List.tail list
+
+let insSort = //сортирует вставкой [1,5,3,4] [1] [1,5] [1,3,5] [1,3,4,5]
+	
+
+
+
+let insSort =
+	let ins el = function
+	[]->[el]
+	|(x::xs) when d>x -> x::ins el xs
+
+	|list->el::list
+foldl (fun acc x -> ins x acc) [] list
+	(flip ins)
+
+Folder ins list []
+
+
+
+map,filter - можем записать с помощью левой и правой свертки, а всегда ли эти свертки совпадают?
+foldl (-) [] [1..5]
+foldr (-) [1..5] []
+
+
+
+let rec foldr f list a = 
+	match list with
+	|[]->a
+	|h::t-> f h (foldr f t a)
+
+
+foldr (-) [1..10000000] 4 валится со стековерфлоу
+Но с левой сверткой все нормально
+foldl (-) 4 [1..10000000]
+
+
+
+Обязательно доходим до конца стека и вычисляем (в правой свертке)
+
+let foldrc f list a = 
+	let rec loop cont = function
+	|[]->cont a 
+	|(x::xs)loop (fun ca->cont(f x ca)) xc
+	loop (fun x->x)list
+
+foldrc (-) [1..10000000] 4
+
+
+List.scaunBack (+) [1..5] []
+List.scan (+) [] [1..5]
+
+->[0,1,3,6,10,15]
+->[15,14,12,9,5,0]
+
+
+let rec scanr f list a =
+	match list with
+	[]->[a]
+	|l::ls->let tl = scanr f ls a
+		(f l (List.head tl))::tl
+	
+	
+
+
+let scanl f a list = a:(case list y
+	[]->[]
+	x::xs -> scanl f (f a x) xs
+	)
+
+
+
+
+
+
+
+
+
+
